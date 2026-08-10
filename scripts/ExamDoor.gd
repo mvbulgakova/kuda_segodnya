@@ -1,11 +1,12 @@
 extends "res://scripts/Interactable.gd"
 
 # Дверь ауд. 401 — переход к финальной КР (акт 5).
-# MVP: без предусловий (акты 3-4 ещё не реализованы), любой игрок может
-# открыть дверь для всей команды — чтобы уже сейчас можно было пройти
-# полный круг Lobby → Коридор → КР → Концовка.
+# Заперта, пока не собран итоговый код акта 4 (флаг act4_unlocked).
 
 func _on_interact(peer_id: int) -> void:
+	if not GameState.has_flag("act4_unlocked"):
+		Hud.show_hint("Дверь заперта. Собери код из ауд. 305 и стенда в вестибюле (акт 4).", 4.0)
+		return
 	_request_start_exam.rpc_id(1, peer_id)
 
 

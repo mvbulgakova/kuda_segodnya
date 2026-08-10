@@ -1,8 +1,11 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/Corridor.gd" id="1_corr"]
 [ext_resource type="Script" path="res://scripts/NoteStash.gd" id="2_stash"]
 [ext_resource type="Script" path="res://scripts/ExamDoor.gd" id="3_door"]
+[ext_resource type="Script" path="res://scripts/GraphNode.gd" id="4_graph"]
+[ext_resource type="Script" path="res://scripts/LockPanel.gd" id="5_lock"]
+[ext_resource type="Script" path="res://scripts/ClueSign.gd" id="6_clue"]
 
 [sub_resource type="BoxMesh" id="Mesh_floor"]
 size = Vector3(20, 0.2, 40)
@@ -30,6 +33,15 @@ size = Vector3(1.2, 2.2, 0.3)
 
 [sub_resource type="StandardMaterial3D" id="Mat_door"]
 albedo_color = Color(0.75, 0.2, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_graph"]
+albedo_color = Color(0.2, 0.45, 0.85, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_lock"]
+albedo_color = Color(0.55, 0.25, 0.75, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_clue"]
+albedo_color = Color(0.25, 0.7, 0.35, 1)
 
 [node name="CorridorGavrikova" type="Node3D"]
 script = ExtResource("1_corr")
@@ -121,3 +133,143 @@ surface_material_override/0 = SubResource("Mat_door")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExamDoor"]
 shape = SubResource("Shape_door")
+
+[node name="GraphNode_Analyst" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.35, -10)
+script = ExtResource("4_graph")
+owner_role = 1
+digit = "7"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GraphNode_Analyst"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_graph")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GraphNode_Analyst"]
+shape = SubResource("Shape_stash")
+
+[node name="GraphNode_Algebraist" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.35, -10)
+script = ExtResource("4_graph")
+owner_role = 2
+digit = "3"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GraphNode_Algebraist"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_graph")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GraphNode_Algebraist"]
+shape = SubResource("Shape_stash")
+
+[node name="GraphNode_Geometer" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.35, 10)
+script = ExtResource("4_graph")
+owner_role = 3
+digit = "9"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GraphNode_Geometer"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_graph")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GraphNode_Geometer"]
+shape = SubResource("Shape_stash")
+
+[node name="GraphNode_Starosta" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.35, 10)
+script = ExtResource("4_graph")
+owner_role = 4
+digit = "1"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GraphNode_Starosta"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_graph")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GraphNode_Starosta"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_GraphNet" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+billboard = 1
+text = "Сеть замков"
+outline_size = 4
+font_size = 32
+
+[node name="LockPanel_Act3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+script = ExtResource("5_lock")
+hint = "Нажми E — ввести код сети"
+correct_code = "7391"
+unlock_flag = "act3_unlocked"
+panel_title = "Сеть замков"
+panel_prompt = "Собери код из четырёх вершин — спроси у каждой роли её узел (порядок: аналитик, алгебраист, геометр, староста)."
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LockPanel_Act3"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_lock")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LockPanel_Act3"]
+shape = SubResource("Shape_stash")
+
+[node name="RoomLabel_Aud305" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -12)
+billboard = 1
+text = "Ауд. 305 (заперта)"
+outline_size = 4
+font_size = 32
+
+[node name="ClueSign_Board305" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.35, -12)
+script = ExtResource("6_clue")
+hint = "Нажми E — прочитать доску"
+clue_text = "Доска в 305: первая половина кода — 24."
+requires_flag = "act3_unlocked"
+locked_hint = "Ауд. 305 заперта. Сначала реши сеть замков (акт 3)."
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClueSign_Board305"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_clue")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClueSign_Board305"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_Vestibule" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -12)
+billboard = 1
+text = "Вестибюль · стенд"
+outline_size = 4
+font_size = 32
+
+[node name="ClueSign_StandVestibule" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.35, -12)
+script = ExtResource("6_clue")
+hint = "Нажми E — прочитать стенд"
+clue_text = "Стенд в вестибюле: вторая половина кода — 06.\n(мелким шрифтом: «см. также старый корпус на Малой Пироговской, 1»)"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClueSign_StandVestibule"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_clue")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClueSign_StandVestibule"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_FinalCode" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 15)
+billboard = 1
+text = "Итоговый код"
+outline_size = 4
+font_size = 32
+
+[node name="LockPanel_Act4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 15)
+script = ExtResource("5_lock")
+hint = "Нажми E — ввести итоговый код"
+correct_code = "2406"
+unlock_flag = "act4_unlocked"
+panel_title = "Итоговый код"
+panel_prompt = "Сложи половины из 305 и вестибюля — это откроет дверь ауд. 401."
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LockPanel_Act4"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_lock")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LockPanel_Act4"]
+shape = SubResource("Shape_stash")

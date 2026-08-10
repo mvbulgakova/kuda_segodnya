@@ -33,10 +33,17 @@ func _on_note_collected(_note_id: String, subject: String, collector_peer_id: in
 		text = "Ты нашёл(а) конспект:\n%s" % subject
 	else:
 		text = "%s нашёл(а) конспект:\n%s" % [collector_name, subject]
-	_spawn_toast(text)
+	_spawn_toast(text, 3.0)
 
 
-func _spawn_toast(text: String) -> void:
+# Публичный хук для любых интерактивных объектов (узлы сети замков,
+# запертые двери, стенды с подсказками) — короткое сообщение только
+# на экране того, кто его вызвал.
+func show_hint(text: String, duration: float = 4.0) -> void:
+	_spawn_toast(text, duration)
+
+
+func _spawn_toast(text: String, duration: float) -> void:
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(380, 0)
 	var label := Label.new()
@@ -45,7 +52,7 @@ func _spawn_toast(text: String) -> void:
 	panel.add_child(label)
 	toast_container.add_child(panel)
 	var tween := create_tween()
-	tween.tween_interval(3.0)
+	tween.tween_interval(duration)
 	tween.tween_callback(panel.queue_free)
 
 

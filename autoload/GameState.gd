@@ -55,12 +55,17 @@ var my_nickname: String = ""
 # Список игроков в комнате: peer_id -> {nickname, role}
 var players: Dictionary = {}
 
+# Общие флаги сюжета (открытые двери, решённые головоломки и т.п.).
+# Дженерик-хранилище вместо отдельной var на каждый гейт актов 3-4.
+var story_flags: Dictionary = {}
+
 signal act_advanced(new_act: int)
 signal note_collected(note_id: String, subject: String, collector_peer_id: int)
 signal pedagogy_changed(new_value: int)
 signal players_changed()
 signal exam_progress_changed()
 signal exam_finished(grade: String)
+signal story_flag_changed(flag: String, value: bool)
 
 
 func reset() -> void:
@@ -74,6 +79,7 @@ func reset() -> void:
 	exam_team_sub.clear()
 	exam_team_final = {}
 	exam_grade = ""
+	story_flags.clear()
 
 
 func advance_act() -> void:
@@ -128,3 +134,12 @@ func submit_team_final(text: String, correct: bool) -> void:
 func finish_exam(grade: String) -> void:
 	exam_grade = grade
 	exam_finished.emit(grade)
+
+
+func set_flag(flag: String, value: bool) -> void:
+	story_flags[flag] = value
+	story_flag_changed.emit(flag, value)
+
+
+func has_flag(flag: String) -> bool:
+	return story_flags.get(flag, false)
