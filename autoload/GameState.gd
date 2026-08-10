@@ -40,6 +40,14 @@ var collected_notes: Dictionary = {}
 # Педагогические очки — заработаны через мини-игру «объясни школьнику»
 var pedagogy_points: int = 0
 
+# Акт 5 — финальная КР. Аналитик/Алгебраист/Геометр решают личную задачу
+# и по шагу командной; староста задач не решает, но собирает их шаги
+# и сдаёт финальный ответ (см. GAME_DESIGN.md, роль «Староста»).
+var exam_individual: Dictionary = {}   # role(int) -> {"text": String, "correct": bool}
+var exam_team_sub: Dictionary = {}     # role(int) -> {"text": String, "correct": bool}
+var exam_team_final: Dictionary = {}   # {"text": String, "correct": bool}
+var exam_grade: String = ""
+
 # Мой персонаж — роль, ник
 var my_role: Role = Role.UNSET
 var my_nickname: String = ""
@@ -51,6 +59,8 @@ signal act_advanced(new_act: int)
 signal note_collected(note_id: String, subject: String, collector_peer_id: int)
 signal pedagogy_changed(new_value: int)
 signal players_changed()
+signal exam_progress_changed()
+signal exam_finished(grade: String)
 
 
 func reset() -> void:
@@ -60,6 +70,10 @@ func reset() -> void:
 	collected_notes.clear()
 	pedagogy_points = 0
 	players.clear()
+	exam_individual.clear()
+	exam_team_sub.clear()
+	exam_team_final = {}
+	exam_grade = ""
 
 
 func advance_act() -> void:
@@ -94,3 +108,23 @@ func unregister_player(peer_id: int) -> void:
 
 func role_name(role: Role) -> String:
 	return ROLE_NAMES.get(role, "?")
+
+
+func submit_individual(role: int, text: String, correct: bool) -> void:
+	exam_individual[role] = {"text": text, "correct": correct}
+	exam_progress_changed.emit()
+
+
+func submit_team_sub(role: int, text: String, correct: bool) -> void:
+	exam_team_sub[role] = {"text": text, "correct": correct}
+	exam_progress_changed.emit()
+
+
+func submit_team_final(text: String, correct: bool) -> void:
+	exam_team_final = {"text": text, "correct": correct}
+	exam_progress_changed.emit()
+
+
+func finish_exam(grade: String) -> void:
+	exam_grade = grade
+	exam_finished.emit(grade)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/Corridor.gd" id="1_corr"]
 [ext_resource type="Script" path="res://scripts/NoteStash.gd" id="2_stash"]
+[ext_resource type="Script" path="res://scripts/ExamDoor.gd" id="3_door"]
 
 [sub_resource type="BoxMesh" id="Mesh_floor"]
 size = Vector3(20, 0.2, 40)
@@ -20,6 +21,15 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="Mat_stash"]
 albedo_color = Color(0.9, 0.75, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_door"]
+size = Vector3(1.2, 2.2, 0.3)
+
+[sub_resource type="BoxShape3D" id="Shape_door"]
+size = Vector3(1.2, 2.2, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_door"]
+albedo_color = Color(0.75, 0.2, 0.2, 1)
 
 [node name="CorridorGavrikova" type="Node3D"]
 script = ExtResource("1_corr")
@@ -92,3 +102,22 @@ surface_material_override/0 = SubResource("Mat_stash")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stash_Aud306"]
 shape = SubResource("Shape_stash")
+
+[node name="RoomLabel_Aud401" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 19)
+billboard = 1
+text = "Ауд. 401 · КР"
+outline_size = 4
+font_size = 32
+
+[node name="ExamDoor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 19)
+script = ExtResource("3_door")
+hint = "Нажми E — начать КР"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExamDoor"]
+mesh = SubResource("Mesh_door")
+surface_material_override/0 = SubResource("Mat_door")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExamDoor"]
+shape = SubResource("Shape_door")

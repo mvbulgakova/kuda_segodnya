@@ -1,0 +1,122 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/FinalExam.gd" id="1_exam"]
+
+[node name="FinalExam" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_exam")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+text = "Акт 5. КР — ауд. 401, 8:00 утра"
+horizontal_alignment = 1
+
+[node name="MyTaskPanel" type="PanelContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/MyTaskPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Margin/VBox/MyTaskPanel/VBox"]
+layout_mode = 2
+text = "Задача"
+
+[node name="PromptLabel" type="Label" parent="Margin/VBox/MyTaskPanel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "..."
+
+[node name="AnswerEdit" type="LineEdit" parent="Margin/VBox/MyTaskPanel/VBox"]
+layout_mode = 2
+placeholder_text = "Ответ"
+
+[node name="SubmitButton" type="Button" parent="Margin/VBox/MyTaskPanel/VBox"]
+layout_mode = 2
+text = "Ответить"
+
+[node name="StatusLabel" type="Label" parent="Margin/VBox/MyTaskPanel/VBox"]
+layout_mode = 2
+
+[node name="TeamTaskPanel" type="PanelContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/TeamTaskPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+text = "Командная задача"
+
+[node name="NarrativeLabel" type="Label" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "..."
+
+[node name="PromptLabel" type="Label" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "..."
+
+[node name="AnswerEdit" type="LineEdit" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+placeholder_text = "Твой шаг"
+
+[node name="SubmitButton" type="Button" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+text = "Отправить командный шаг"
+
+[node name="StatusLabel" type="Label" parent="Margin/VBox/TeamTaskPanel/VBox"]
+layout_mode = 2
+
+[node name="StarostaPanel" type="PanelContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/StarostaPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Margin/VBox/StarostaPanel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Ты не решаешь задачи — собери шаги команды и сдай итог."
+
+[node name="ProgressList" type="VBoxContainer" parent="Margin/VBox/StarostaPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="FinalEdit" type="LineEdit" parent="Margin/VBox/StarostaPanel/VBox"]
+layout_mode = 2
+editable = false
+placeholder_text = "Итоговое значение (появится, когда команда решит шаги)"
+
+[node name="FinalSubmitButton" type="Button" parent="Margin/VBox/StarostaPanel/VBox"]
+layout_mode = 2
+disabled = true
+text = "Сдать КР"
+
+[connection signal="pressed" from="Margin/VBox/MyTaskPanel/VBox/SubmitButton" to="." method="_on_my_task_submit_pressed"]
+[connection signal="pressed" from="Margin/VBox/TeamTaskPanel/VBox/SubmitButton" to="." method="_on_team_task_submit_pressed"]
+[connection signal="pressed" from="Margin/VBox/StarostaPanel/VBox/FinalSubmitButton" to="." method="_on_final_submit_pressed"]
