@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ExplainDialog.gd" id="1_expl"]
+
+[node name="ExplainDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_expl")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -260.0
+offset_right = 360.0
+offset_bottom = 260.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_constants/separation = 10
+
+[node name="TopicLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Младший брат просит объяснить тему."
+
+[node name="ExplanationEdit" type="TextEdit" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Твоё объяснение здесь. Пиши как для семиклассника."
+
+[node name="SendButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Отправить объяснение"
+
+[node name="ReplyLabel" type="RichTextLabel" parent="Panel/VBox"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Закрыть"
+
+[connection signal="pressed" from="Panel/VBox/SendButton" to="." method="_on_send_pressed"]
+[connection signal="pressed" from="Panel/VBox/CloseButton" to="." method="_on_close_pressed"]

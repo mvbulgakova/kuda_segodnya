@@ -1,0 +1,49 @@
+# Godot 4+ specific
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# Godot-specific ignores
+.import/
+*.tmp
+
+# Imported assets translation files
+*.translation
+
+# Mono/C# specific
+.mono/
+data_*/
+mono_crash.*.json
+
+# System / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.log
+
+# Python (LLM bridge)
+llm_bridge/__pycache__/
+llm_bridge/.venv/
+llm_bridge/venv/
+llm_bridge/.env
+*.pyc
+
+# Env
+.env
+.env.local
+
+# Node (if we ever need it)
+node_modules/
+
+# Large media that shouldn't be in git
+assets/photos/originals/
+assets/videos/
+*.mp4
+*.mov
+
+# Legacy Python app (old kuda_segodnya)
+_legacy/

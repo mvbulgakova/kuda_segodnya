@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_menu"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -280.0
+offset_right = 300.0
+offset_bottom = 280.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "НОЧЬ ПЕРЕД КР"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "МПГУ · ИМИ · 19 октября 2025, 23:47"
+horizontal_alignment = 1
+
+[node name="NicknameLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Как тебя зовут:"
+
+[node name="NicknameEdit" type="LineEdit" parent="Panel/VBox"]
+layout_mode = 2
+text = "Первокурсник"
+
+[node name="RoleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Роль в команде:"
+
+[node name="RoleOption" type="OptionButton" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="HostButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Создать игру (я — host)"
+
+[node name="JoinRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="IpEdit" type="LineEdit" parent="Panel/VBox/JoinRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "IP хоста (127.0.0.1 — локально)"
+
+[node name="JoinButton" type="Button" parent="Panel/VBox/JoinRow"]
+layout_mode = 2
+text = "Присоединиться"
+
+[node name="QuitButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Выйти"
+
+[connection signal="pressed" from="Panel/VBox/HostButton" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Panel/VBox/JoinRow/JoinButton" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Panel/VBox/QuitButton" to="." method="_on_quit_pressed"]

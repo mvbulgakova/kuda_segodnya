@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/Corridor.gd" id="1_corr"]
+[ext_resource type="Script" path="res://scripts/NoteStash.gd" id="2_stash"]
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+size = Vector3(20, 0.2, 40)
+
+[sub_resource type="BoxShape3D" id="Shape_floor"]
+size = Vector3(20, 0.2, 40)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.6, 0.55, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_stash"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="Shape_stash"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="Mat_stash"]
+albedo_color = Color(0.9, 0.75, 0.2, 1)
+
+[node name="CorridorGavrikova" type="Node3D"]
+script = ExtResource("1_corr")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 5, 0)
+light_energy = 0.6
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("Mesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("Shape_floor")
+
+[node name="RoomLabel_Aud405" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -5)
+billboard = 1
+text = "Ауд. 405 · лекционная"
+outline_size = 4
+font_size = 32
+
+[node name="RoomLabel_Aud306" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, 5)
+billboard = 1
+text = "Ауд. 306 · матан"
+outline_size = 4
+font_size = 32
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, -15)
+
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, -15)
+
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 15)
+
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 15)
+
+[node name="Stash_Aud405" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.35, -5)
+script = ExtResource("2_stash")
+note_id = "matan_405"
+subject = "Матан. Ауд. 405. Тема: монотонность функции"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stash_Aud405"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_stash")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stash_Aud405"]
+shape = SubResource("Shape_stash")
+
+[node name="Stash_Aud306" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.35, 5)
+script = ExtResource("2_stash")
+note_id = "algebra_306"
+subject = "Алгебра. Ауд. 306. Тема: определители 3×3"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stash_Aud306"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_stash")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stash_Aud306"]
+shape = SubResource("Shape_stash")
