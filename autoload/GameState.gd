@@ -33,7 +33,8 @@ var acts: Array = [
 	{"name": "КР: В добрый путь, первокурсник", "state": ActState.NOT_STARTED},
 ]
 
-# Собранные конспекты. Ключ — id листка ("matan_1" и т.п.), значение — bool
+# Собранные конспекты (общий командный инвентарь). Ключ — id листка ("matan_1" и т.п.),
+# значение — текст темы (subject), чтобы инвентарь мог отрисоваться без похода к тайнику.
 var collected_notes: Dictionary = {}
 
 # Педагогические очки — заработаны через мини-игру «объясни школьнику»
@@ -47,7 +48,7 @@ var my_nickname: String = ""
 var players: Dictionary = {}
 
 signal act_advanced(new_act: int)
-signal note_collected(note_id: String)
+signal note_collected(note_id: String, subject: String, collector_peer_id: int)
 signal pedagogy_changed(new_value: int)
 signal players_changed()
 
@@ -70,10 +71,10 @@ func advance_act() -> void:
 	act_advanced.emit(current_act)
 
 
-func collect_note(note_id: String) -> void:
-	if not collected_notes.get(note_id, false):
-		collected_notes[note_id] = true
-		note_collected.emit(note_id)
+func collect_note(note_id: String, subject: String, collector_peer_id: int = 0) -> void:
+	if not collected_notes.has(note_id):
+		collected_notes[note_id] = subject
+		note_collected.emit(note_id, subject, collector_peer_id)
 
 
 func add_pedagogy(delta: int) -> void:
