@@ -22,7 +22,7 @@
 
 ### 1. Godot 4 клиент
 
-1. Скачай [Godot 4.3](https://godotengine.org/download) (Standard, не .NET).
+1. Скачай [Godot 4.3+](https://godotengine.org/download) (Standard, не .NET). Проверено на 4.3 и 4.7.
 2. Открой этот репозиторий как проект (`Import` → выбрать `project.godot`).
 3. Запусти сцену `res://scenes/MainMenu.tscn` (F5 после установки её как главной, либо через кнопку play).
 
