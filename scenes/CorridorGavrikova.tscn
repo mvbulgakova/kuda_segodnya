@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/Corridor.gd" id="1_corr"]
 [ext_resource type="Script" path="res://scripts/NoteStash.gd" id="2_stash"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/GraphNode.gd" id="4_graph"]
 [ext_resource type="Script" path="res://scripts/LockPanel.gd" id="5_lock"]
 [ext_resource type="Script" path="res://scripts/ClueSign.gd" id="6_clue"]
+[ext_resource type="Script" path="res://scripts/NpcTrigger.gd" id="7_npc"]
 
 [sub_resource type="BoxMesh" id="Mesh_floor"]
 size = Vector3(20, 0.2, 40)
@@ -42,6 +43,9 @@ albedo_color = Color(0.55, 0.25, 0.75, 1)
 
 [sub_resource type="StandardMaterial3D" id="Mat_clue"]
 albedo_color = Color(0.25, 0.7, 0.35, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_npc"]
+albedo_color = Color(0.9, 0.6, 0.3, 1)
 
 [node name="CorridorGavrikova" type="Node3D"]
 script = ExtResource("1_corr")
@@ -272,4 +276,67 @@ mesh = SubResource("Mesh_stash")
 surface_material_override/0 = SubResource("Mat_lock")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LockPanel_Act4"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_Lyuba" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -18)
+billboard = 1
+text = "тётя Люба · вахтёр"
+outline_size = 4
+font_size = 32
+
+[node name="NPC_Lyuba" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -18)
+script = ExtResource("7_npc")
+hint = "Нажми E — поговорить"
+character_id = "vahtyor_lyuba"
+display_name = "тётя Люба"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC_Lyuba"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_npc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC_Lyuba"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_Artem" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, -8)
+billboard = 1
+text = "Артём · старшекурсник"
+outline_size = 4
+font_size = 32
+
+[node name="NPC_Artem" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.35, -8)
+script = ExtResource("7_npc")
+hint = "Нажми E — поговорить"
+character_id = "senior_artem"
+display_name = "Артём"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC_Artem"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_npc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC_Artem"]
+shape = SubResource("Shape_stash")
+
+[node name="Label_Valeria" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3, -8)
+billboard = 1
+text = "Валерия · куратор"
+outline_size = 4
+font_size = 32
+
+[node name="NPC_Valeria" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.35, -8)
+script = ExtResource("7_npc")
+hint = "Нажми E — поговорить"
+character_id = "curator_valeria"
+display_name = "Валерия"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC_Valeria"]
+mesh = SubResource("Mesh_stash")
+surface_material_override/0 = SubResource("Mat_npc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC_Valeria"]
 shape = SubResource("Shape_stash")
